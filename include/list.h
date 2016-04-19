@@ -6,7 +6,6 @@ struct list_node_s
 	struct list_node_s * next;
 	void * elt;
 };
-
 typedef struct list_node_s list_node_t;
 
 typedef int (*list_t_cmp_f)(void const *, void const *);

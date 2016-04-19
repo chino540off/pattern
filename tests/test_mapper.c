@@ -8,6 +8,7 @@
 void c_print(void const * a, void * data)
 {
 	FILE * s = (FILE *)data;
+
 	counter_print((counter_t const *)a, s);
 	fprintf(s, "\n");
 }
@@ -25,7 +26,7 @@ int main(int argc,
 
 	for (unsigned int i = 0; i < mapper->n; ++i)
 	{
-		list_node_foreach(mapper->arr[i], c_print, stdout);
+		list_node_foreach(mapper->runners[i].list, c_print, stdout);
 		fprintf(stdout, "\n");
 	}
 
