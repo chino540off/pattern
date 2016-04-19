@@ -10,7 +10,18 @@ void c_print(void const * a, void * data)
 	FILE * s = (FILE *)data;
 
 	counter_print((counter_t const *)a, s);
-	fprintf(s, "\n");
+	fprintf(s, " ");
+}
+
+void * doit(void * data)
+{
+	runner_t * r = (runner_t *)data;
+
+	fprintf(stdout, "[%d]", r->index);
+	list_node_foreach(r->list, c_print, stdout);
+	fprintf(stdout, "\n");
+
+	pthread_exit(data);
 }
 
 int main(int argc,
@@ -23,12 +34,6 @@ int main(int argc,
 	mapper_t *		mapper;
 
 	mapper = mapper_new(len, argv + 2);
-
-	for (unsigned int i = 0; i < mapper->n; ++i)
-	{
-		list_node_foreach(mapper->runners[i].list, c_print, stdout);
-		fprintf(stdout, "\n");
-	}
-
+	mapper_run(mapper, doit);
 	mapper_free(mapper);
 }

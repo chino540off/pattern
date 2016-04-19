@@ -24,11 +24,15 @@ mapper_t * mapper_new(unsigned int n, char const * patterns[])
 		return 0;
 	}
 
+	mapper->runners[0].index = 0;
 	for (unsigned int i = 0; patterns[i]; ++i)
 		mapper->runners[0].list = list_node_insert(mapper->runners[0].list, counter_new(0, patterns[i]), c_cmp);
 
 	for (unsigned int i = 1; i < n; ++i)
+	{
+		mapper->runners[i].index = i;
 		mapper->runners[i].list = list_node_dup(mapper->runners[0].list, (list_t_dup_f)counter_dup);
+	}
 
 	return mapper;
 }
@@ -42,3 +46,30 @@ void mapper_free(mapper_t * mapper)
 	free(mapper);
 }
 
+void mapper_run(mapper_t * mapper, runner_f doit)
+{
+	pthread_attr_t attr;
+
+	pthread_attr_init(&attr);
+	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+
+	for (unsigned int i = 0; i < mapper->n; ++i)
+	{
+		if (pthread_create(&mapper->runners[i].thread, &attr, doit, mapper->runners + i))
+		{
+			// FIXME: error
+			perror("pthread_create: ");
+			return;
+		}
+	}
+
+	for (unsigned int i = 0; i < mapper->n; ++i)
+	{
+		void * status;
+
+		if (pthread_join(mapper->runners[i].thread, &status))
+		{
+			perror("pthread_join: ");
+		}
+	}
+}
