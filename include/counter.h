@@ -12,33 +12,39 @@ struct counter_s
 
 typedef struct counter_s counter_t;
 
-counter_t * counter_new(unsigned int value, char const * pattern)
-{
-	counter_t * c = 0;
+/** 
+ * @brief 
+ * 
+ * @param value
+ * @param pattern
+ * 
+ * @return 
+ */
+counter_t * counter_new(unsigned int value, char const * pattern);
 
-	if ((c = malloc(sizeof (counter_t))) == 0)
-		return 0;
+/** 
+ * @brief 
+ * 
+ * @param c
+ * @param s
+ */
+void counter_print(counter_t const * c, FILE * s);
 
-	c->value = value;
-	c->pattern = pattern;
+/** 
+ * @brief 
+ * 
+ * @param c
+ * 
+ * @return 
+ */
+counter_t * counter_dup(counter_t const * c);
 
-	return c;
-}
-
-void counter_print(counter_t const * c, FILE * s)
-{
-	fprintf(s, "pattern %s == %d", c->pattern, c->value);
-}
-
-counter_t * counter_dup(counter_t const * c)
-{
-	return counter_new(c->value, c->pattern);
-}
-
-void counter_free(counter_t * c)
-{
-	free(c);
-}
+/** 
+ * @brief 
+ * 
+ * @param c
+ */
+void counter_free(counter_t * c);
 
 #endif /** !COUNTER_H_  */
 

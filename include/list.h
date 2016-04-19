@@ -1,8 +1,6 @@
 #ifndef LIST_H_
 # define LIST_H_
 
-# include <stdlib.h>
-
 struct list_node_s
 {
 	struct list_node_s * next;

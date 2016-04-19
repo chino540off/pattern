@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include <list.h>
 
 list_node_t * list_node_new(void * elt, list_node_t * next)
