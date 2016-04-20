@@ -1,35 +1,32 @@
-#include <stdio.h>
-
+#include <part_stream.h>
 #include <map.h>
 #include <mapper.h>
 #include <pattern.h>
+#include <counter.h>
 
 void * do_map(void * data)
 {
 	runner_t * r = (runner_t *)data;
 	pattern_ctx_t * ctx = (pattern_ctx_t *)r->data;
+	part_stream_t * ps;
 
-	FILE * fd = 0;
-
-	if ((fd = fopen(ctx->filename, "r")) == 0)
+	if ((ps = part_stream_open(ctx->filename, "r", r->index, r->n)) == 0)
 	{
-		perror("fopen: ");
+		perror("part_stream_open");
 		pthread_exit(0);
 	}
 
-	fseek(fd, 0, SEEK_END);
-	unsigned int f_size = ftell(fd);
+	part_stream_seek(ps, 0);
 
-	unsigned int slice = f_size / r->n;
-	unsigned int r_size = (r->index == r->n - 1) ? slice + (f_size % r->n) : slice;
-
-	printf("f_size of file: %d, part to be read: %d\n", f_size, r_size);
-	printf("index to start: %d\n", slice * r->index);
-	fseek(fd, slice * r->index, SEEK_SET);
-
-	if (fclose(fd))
+	while (!part_stream_eop(ps))
 	{
-		perror("fclose: ");
+		char c = part_stream_getc(ps);
+
+	}
+
+	if (part_stream_close(ps))
+	{
+		perror("part_stream_close");
 		pthread_exit(0);
 	}
 
