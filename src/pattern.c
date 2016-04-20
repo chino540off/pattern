@@ -38,5 +38,8 @@ int main(int argc, char const * argv[])
 	mapper_run(mapper, do_map);
 	mapper_free(mapper);
 
+	for (unsigned int i = 0; i < n; ++i)
+		list_node_free(contexts[i].list, (list_t_free_f)counter_free);
+
 	return 0;
 }
