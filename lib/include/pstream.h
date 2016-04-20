@@ -1,11 +1,11 @@
-#ifndef PART_STREAM_H_
-# define PART_STREAM_H_
+#ifndef PSTREAM_H_
+# define PSTREAM_H_
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
 
-struct part_stream_s
+struct pstream_s
 {
 	FILE * fd;
 	int offset;
@@ -14,7 +14,7 @@ struct part_stream_s
 	unsigned int i;
 	unsigned int n;
 };
-typedef struct part_stream_s part_stream_t;
+typedef struct pstream_s pstream_t;
 
 /** 
  * @brief Open a new part stream
@@ -26,7 +26,7 @@ typedef struct part_stream_s part_stream_t;
  * 
  * @return a part stream
  */
-part_stream_t * part_stream_open(char const * fn, char const * m, unsigned int const i, unsigned int const n);
+pstream_t * pstream_open(char const * fn, char const * m, unsigned int const i, unsigned int const n);
 
 /** 
  * @brief End Of Part
@@ -35,7 +35,7 @@ part_stream_t * part_stream_open(char const * fn, char const * m, unsigned int c
  * 
  * @return true if it is the end of the part
  */
-static inline bool part_stream_eop(part_stream_t const * ps)
+static inline bool pstream_eop(pstream_t const * ps)
 {
 	return ps->offset >= ps->size;
 }
@@ -47,7 +47,7 @@ static inline bool part_stream_eop(part_stream_t const * ps)
  * 
  * @return a char
  */
-static inline char part_stream_getc(part_stream_t * ps)
+static inline char pstream_getc(pstream_t * ps)
 {
 	++ps->offset;
 	return fgetc(ps->fd);
@@ -61,7 +61,7 @@ static inline char part_stream_getc(part_stream_t * ps)
  * 
  * @return fseek status
  */
-static inline int part_stream_seek(part_stream_t * ps, int offset)
+static inline int pstream_seek(pstream_t * ps, int offset)
 {
 	return fseek(ps->fd, ps->slice * ps->i + offset, SEEK_SET);
 }
@@ -73,12 +73,12 @@ static inline int part_stream_seek(part_stream_t * ps, int offset)
  * 
  * @return fclose status
  */
-static inline int part_stream_close(part_stream_t * ps)
+static inline int pstream_close(pstream_t * ps)
 {
 	int ret = fclose(ps->fd);
 	free(ps);
 	return ret;
 }
 
-#endif /** !PART_STREAM_H_  */
+#endif /** !PSTREAM_H_  */
 

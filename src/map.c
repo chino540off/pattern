@@ -1,4 +1,4 @@
-#include <part_stream.h>
+#include <pstream.h>
 #include <pattern.h>
 #include <counter.h>
 
@@ -43,22 +43,22 @@ static void check_current_char(void const * elt, void * data)
 runner_t * pattern_map(runner_t * r)
 {
 	pattern_ctx_t * ctx = (pattern_ctx_t *)r->data;
-	part_stream_t * ps;
+	pstream_t * ps;
 	map_state_t state;
 
 	state.current = 0;
 
-	if ((ps = part_stream_open(ctx->filename, "r", r->index, r->n)) == 0)
+	if ((ps = pstream_open(ctx->filename, "r", r->index, r->n)) == 0)
 	{
-		perror("part_stream_open");
+		perror("pstream_open");
 		pthread_exit(0);
 	}
 
-	part_stream_seek(ps, 0);
+	pstream_seek(ps, 0);
 
-	while (!part_stream_eop(ps) || state.current > 0)
+	while (!pstream_eop(ps) || state.current > 0)
 	{
-		state.c = part_stream_getc(ps);
+		state.c = pstream_getc(ps);
 
 		//if (r->index == 0)
 		//	printf("%c", state.c);
@@ -69,9 +69,9 @@ runner_t * pattern_map(runner_t * r)
 	//if (r->index == 0)
 	//	printf("current == %d\n", state.current);
 
-	if (part_stream_close(ps))
+	if (pstream_close(ps))
 	{
-		perror("part_stream_close");
+		perror("pstream_close");
 		pthread_exit(0);
 	}
 

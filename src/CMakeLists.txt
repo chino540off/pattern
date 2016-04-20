@@ -6,4 +6,4 @@ add_executable(pattern
 	counter.c
 	map.c
 	pattern.c)
-target_link_libraries(pattern part_stream cluster slist ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(pattern pstream cluster slist ${CMAKE_THREAD_LIBS_INIT})

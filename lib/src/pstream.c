@@ -1,10 +1,10 @@
-#include <part_stream.h>
+#include <pstream.h>
 
-part_stream_t * part_stream_open(char const * fn, char const * m, unsigned int const i, unsigned int const n)
+pstream_t * pstream_open(char const * fn, char const * m, unsigned int const i, unsigned int const n)
 {
-	part_stream_t * ps;
+	pstream_t * ps;
 
-	if ((ps = malloc(sizeof (part_stream_t))) == 0)
+	if ((ps = malloc(sizeof (pstream_t))) == 0)
 	{
 		return 0;
 	}
