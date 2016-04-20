@@ -19,5 +19,7 @@ find_package(Threads REQUIRED)
 add_subdirectory(src)
 add_subdirectory(tests)
 
+include_directories("${PROJECT_SOURCE_DIR}/include")
+
 add_executable(pattern src/pattern.c)
 target_link_libraries(pattern mapper list ${CMAKE_THREAD_LIBS_INIT})
