@@ -1,7 +1,7 @@
 include(CTest)
 
 include_directories("${PROJECT_SOURCE_DIR}/include")
-link_directories("${PROJECT_SOURCE_DIR}/src")
+include_directories("${PROJECT_SOURCE_DIR}/lib/include")
 
 add_executable(test_list test_list.c)
 target_link_libraries(test_list list)

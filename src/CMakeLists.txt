@@ -1,5 +1,8 @@
+
 include_directories("${PROJECT_SOURCE_DIR}/include")
+include_directories("${PROJECT_SOURCE_DIR}/lib/include")
 
-add_library(list list.c)
-add_library(mapper mapper.c counter.c)
-
+add_executable(pattern
+	counter.c
+	pattern.c)
+target_link_libraries(pattern mapper list ${CMAKE_THREAD_LIBS_INIT})
