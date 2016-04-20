@@ -39,12 +39,12 @@ cluster_t * cluster_new(unsigned int n, void * contexts[]);
 void cluster_free(cluster_t * cluster);
 
 /** 
- * @brief Perform a method on runners
+ * @brief Perform mapper method on runners
  * 
  * @param cluster a cluster
- * @param doit a method to be performed
+ * @param mapper method to be performed
  */
-void cluster_run(cluster_t * cluster, runner_f doit);
+void cluster_map(cluster_t * cluster, runner_f mapper);
 
 #endif /** !CLUSTER_H_  */
 

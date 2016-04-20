@@ -44,7 +44,7 @@ int main(int argc,
 	}
 
 	cluster = cluster_new(n, pcontexts);
-	cluster_run(cluster, r_init);
+	cluster_map(cluster, r_init);
 
 	for (unsigned int i = 0; i < N_CLUSTER; ++i)
 	{

@@ -54,7 +54,7 @@ int main(int argc, char const * argv[])
 	}
 
 	cluster = cluster_new(n, pcontexts);
-	cluster_run(cluster, pattern_map);
+	cluster_map(cluster, pattern_map);
 	cluster_free(cluster);
 
 	slist_node_t * result = 0;

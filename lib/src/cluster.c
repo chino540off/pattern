@@ -35,7 +35,7 @@ void cluster_free(cluster_t * cluster)
 	free(cluster);
 }
 
-void cluster_run(cluster_t * cluster, runner_f doit)
+void cluster_map(cluster_t * cluster, runner_f mapper)
 {
 	pthread_attr_t attr;
 
@@ -44,7 +44,7 @@ void cluster_run(cluster_t * cluster, runner_f doit)
 
 	for (unsigned int i = 0; i < cluster->n; ++i)
 	{
-		if (pthread_create(&cluster->runners[i].thread, &attr, (void*(*)(void*))doit, cluster->runners + i))
+		if (pthread_create(&cluster->runners[i].thread, &attr, (void*(*)(void*))mapper, cluster->runners + i))
 		{
 			perror("pthread_create: ");
 			return;
