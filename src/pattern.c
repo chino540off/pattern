@@ -4,11 +4,6 @@
 #include <counter.h>
 #include <mapper.h>
 
-static int c_cmp(void const * a, void const * b)
-{
-	return strcmp(((counter_t const *)a)->pattern, ((counter_t const *)b)->pattern);
-}
-
 struct counter_ctx_s
 {
 	list_node_t * list;
@@ -71,7 +66,7 @@ int main(int argc, char const * argv[])
 		contexts[i].filename = filename;
 
 		for (unsigned int j = 3; argv[j]; ++j)
-			contexts[i].list = list_node_insert(contexts[i].list, counter_new(0, argv[j]), c_cmp);
+			contexts[i].list = list_node_insert(contexts[i].list, counter_new(0, argv[j]), (list_t_cmp_f)counter_cmp);
 
 		pcontexts[i] = &contexts[i];
 	}

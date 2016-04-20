@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <string.h>
+
 #include <counter.h>
 
 counter_t * counter_new(unsigned int value, char const * pattern)
@@ -16,6 +19,11 @@ counter_t * counter_new(unsigned int value, char const * pattern)
 void counter_print(counter_t const * c, FILE * s)
 {
 	fprintf(s, "pattern %s == %d", c->pattern, c->value);
+}
+
+int counter_cmp(counter_t const * a, counter_t const * b)
+{
+	return strcmp(a->pattern, b->pattern);
 }
 
 counter_t * counter_dup(counter_t const * c)

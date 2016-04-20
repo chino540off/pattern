@@ -1,7 +1,6 @@
 #ifndef COUNTER_H_
 # define COUNTER_H_
 
-# include <stdlib.h>
 # include <stdio.h>
 
 struct counter_s
@@ -30,6 +29,15 @@ counter_t * counter_new(unsigned int value, char const * pattern);
  */
 void counter_print(counter_t const * c, FILE * s);
 
+/** 
+ * @brief 
+ * 
+ * @param a
+ * @param b
+ * 
+ * @return 
+ */
+int counter_cmp(counter_t const * a, counter_t const * b);
 /** 
  * @brief 
  * 
