@@ -26,8 +26,26 @@ static void * do_count(void * data)
 	if ((fd = fopen(ctx->filename, "r")) == 0)
 	{
 		perror("fopen: ");
-		pthread_exit(data);
+		pthread_exit(0);
 	}
+
+	fseek(fd, 0, SEEK_END);
+	unsigned int f_size = ftell(fd);
+
+	unsigned int slice = f_size / r->n;
+	unsigned int r_size = (r->index == r->n - 1) ? slice + (f_size % r->n) : slice;
+
+	printf("f_size of file: %d, part to be read: %d\n", f_size, r_size);
+	printf("index to start: %d\n", slice * r->index);
+	fseek(fd, slice * r->index, SEEK_SET);
+
+	if (fclose(fd))
+	{
+		perror("fclose: ");
+		pthread_exit(0);
+	}
+
+	pthread_exit(data);
 }
 
 int main(int argc, char const * argv[])
@@ -37,6 +55,12 @@ int main(int argc, char const * argv[])
 
 	char const *	filename = argv[1];
 	unsigned int	n = atoi(argv[2]);
+
+	if ((int)n <= 0)
+	{
+		return 1;
+	}
+
 	mapper_t *		mapper;
 	counter_ctx_t	contexts[n];
 	void *			pcontexts[n];

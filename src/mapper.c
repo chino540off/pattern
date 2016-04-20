@@ -23,6 +23,7 @@ mapper_t * mapper_new(unsigned int n, void * contexts[])
 	{
 		mapper->runners[i].data = contexts[i];
 		mapper->runners[i].index = i;
+		mapper->runners[i].n = n;
 	}
 
 	return mapper;
@@ -48,7 +49,6 @@ void mapper_run(mapper_t * mapper, runner_f doit)
 			perror("pthread_create: ");
 			return;
 		}
-
 	}
 
 	pthread_attr_destroy(&attr);

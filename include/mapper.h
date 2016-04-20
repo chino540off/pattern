@@ -8,6 +8,7 @@ struct runner_s
 {
 	pthread_t thread;
 	unsigned int index;
+	unsigned int n;
 	void * data;
 };
 typedef struct runner_s runner_t;
