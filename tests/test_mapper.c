@@ -17,14 +17,13 @@ void no_free(void * p)
 	p = p;
 }
 
-void * r_init(void * data)
+runner_t * r_init(runner_t * r)
 {
-	runner_t * r = (runner_t *)data;
 	counter_ctx_t * ctx = (counter_ctx_t *)r->data;
 
 	ctx->value = r->index;
 
-	pthread_exit(data);
+	pthread_exit(r);
 }
 
 int main(int argc,

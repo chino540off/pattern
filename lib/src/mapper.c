@@ -44,7 +44,7 @@ void mapper_run(mapper_t * mapper, runner_f doit)
 
 	for (unsigned int i = 0; i < mapper->n; ++i)
 	{
-		if (pthread_create(&mapper->runners[i].thread, &attr, doit, mapper->runners + i))
+		if (pthread_create(&mapper->runners[i].thread, &attr, (void*(*)(void*))doit, mapper->runners + i))
 		{
 			perror("pthread_create: ");
 			return;

@@ -13,7 +13,7 @@ struct runner_s
 };
 typedef struct runner_s runner_t;
 
-typedef void * (*runner_f)(void *);
+typedef runner_t * (*runner_f)(runner_t *);
 
 struct mapper_s
 {

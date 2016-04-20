@@ -4,7 +4,6 @@
 #include <counter.h>
 #include <mapper.h>
 #include <pattern.h>
-#include <map.h>
 
 int main(int argc, char const * argv[])
 {
@@ -35,7 +34,7 @@ int main(int argc, char const * argv[])
 	}
 
 	mapper = mapper_new(n, pcontexts);
-	mapper_run(mapper, do_map);
+	mapper_run(mapper, pattern_map);
 	mapper_free(mapper);
 
 	for (unsigned int i = 0; i < n; ++i)

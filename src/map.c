@@ -1,6 +1,4 @@
 #include <part_stream.h>
-#include <map.h>
-#include <mapper.h>
 #include <pattern.h>
 #include <counter.h>
 
@@ -16,6 +14,7 @@ static void check_current_char(void const * elt, void * data)
 	counter_t * counter = (counter_t *)elt;
 	map_state_t * state = (map_state_t *)data;
 
+	/// Current read char
 	if (counter->pattern[counter->offset] == state->c)
 	{
 		if (counter->offset == 0)
@@ -41,9 +40,8 @@ static void check_current_char(void const * elt, void * data)
 	}
 }
 
-void * do_map(void * data)
+runner_t * pattern_map(runner_t * r)
 {
-	runner_t * r = (runner_t *)data;
 	pattern_ctx_t * ctx = (pattern_ctx_t *)r->data;
 	part_stream_t * ps;
 	map_state_t state;
@@ -77,6 +75,6 @@ void * do_map(void * data)
 		pthread_exit(0);
 	}
 
-	pthread_exit(data);
+	pthread_exit(r);
 }
 
