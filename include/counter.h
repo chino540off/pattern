@@ -5,6 +5,9 @@
 
 struct counter_s
 {
+	unsigned int offset;
+	unsigned int size;
+
 	unsigned int value;
 	char const * pattern;
 };

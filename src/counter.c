@@ -10,6 +10,8 @@ counter_t * counter_new(unsigned int value, char const * pattern)
 	if ((c = malloc(sizeof (counter_t))) == 0)
 		return 0;
 
+	c->offset = 0;
+	c->size = strlen(pattern);
 	c->value = value;
 	c->pattern = pattern;
 
