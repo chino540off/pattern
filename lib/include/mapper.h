@@ -23,26 +23,27 @@ struct mapper_s
 typedef struct mapper_s mapper_t;
 
 /** 
- * @brief 
+ * @brief Create a new mapper
  * 
- * @param n
- * @param patterns[]
+ * @param n the number of runners
+ * @param contexts an array of contexts given to runners
  * 
  * @return 
  */
 mapper_t * mapper_new(unsigned int n, void * contexts[]);
 
 /** 
- * @brief 
+ * @brief Free a mapper
  * 
- * @param mapper
+ * @param mapper a mapper
  */
 void mapper_free(mapper_t * mapper);
 
 /** 
- * @brief 
+ * @brief Perform a method on runners
  * 
- * @param mapper
+ * @param mapper a mapper
+ * @param doit a method to be performed
  */
 void mapper_run(mapper_t * mapper, runner_f doit);
 

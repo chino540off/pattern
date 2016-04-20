@@ -15,45 +15,45 @@ struct counter_s
 typedef struct counter_s counter_t;
 
 /** 
- * @brief 
+ * @brief Create a new counter
  * 
- * @param value
- * @param pattern
+ * @param value the initialization value
+ * @param pattern the pattern to be counted
  * 
  * @return 
  */
 counter_t * counter_new(unsigned int value, char const * pattern);
 
 /** 
- * @brief 
+ * @brief Print a counter
  * 
- * @param c
- * @param s
+ * @param c a counter
+ * @param s the output stream
  */
 void counter_print(counter_t const * c, FILE * s);
 
 /** 
- * @brief 
+ * @brief Compare 2 counters
  * 
- * @param a
- * @param b
+ * @param a lhs
+ * @param b rhs
  * 
- * @return 
+ * @return the difference between them
  */
 int counter_cmp(counter_t const * a, counter_t const * b);
 /** 
- * @brief 
+ * @brief Duplicate a counter
  * 
- * @param c
+ * @param c a counter
  * 
- * @return 
+ * @return a new counter with c's values
  */
 counter_t * counter_dup(counter_t const * c);
 
 /** 
- * @brief 
+ * @brief Free a counter
  * 
- * @param c
+ * @param c a counter
  */
 void counter_free(counter_t * c);
 

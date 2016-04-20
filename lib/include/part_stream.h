@@ -17,23 +17,23 @@ struct part_stream_s
 typedef struct part_stream_s part_stream_t;
 
 /** 
- * @brief 
+ * @brief Open a new part stream
  * 
- * @param fn
- * @param m
- * @param i
- * @param n
+ * @param fn the file to be opened
+ * @param m the opened mode
+ * @param i the index part
+ * @param n the total number of parts
  * 
- * @return 
+ * @return a part stream
  */
 part_stream_t * part_stream_open(char const * fn, char const * m, unsigned int const i, unsigned int const n);
 
 /** 
- * @brief 
+ * @brief End Of Part
  * 
- * @param ps
+ * @param ps a part stream
  * 
- * @return 
+ * @return true if it is the end of the part
  */
 static inline bool part_stream_eop(part_stream_t const * ps)
 {
@@ -41,11 +41,11 @@ static inline bool part_stream_eop(part_stream_t const * ps)
 }
 
 /** 
- * @brief 
+ * @brief Get the next char in the stream
  * 
- * @param ps
+ * @param ps a part stream
  * 
- * @return 
+ * @return a char
  */
 static inline char part_stream_getc(part_stream_t * ps)
 {
@@ -54,12 +54,12 @@ static inline char part_stream_getc(part_stream_t * ps)
 }
 
 /** 
- * @brief 
+ * @brief Seek into a part stream
  * 
- * @param ps
- * @param offset
+ * @param ps a part stream
+ * @param offset seek offset, relative to the index part in the file
  * 
- * @return 
+ * @return fseek status
  */
 static inline int part_stream_seek(part_stream_t * ps, int offset)
 {
@@ -67,11 +67,11 @@ static inline int part_stream_seek(part_stream_t * ps, int offset)
 }
 
 /** 
- * @brief 
+ * @brief Close a part stream
  * 
- * @param ps
+ * @param ps a part stream
  * 
- * @return 
+ * @return fclose status
  */
 static inline int part_stream_close(part_stream_t * ps)
 {
