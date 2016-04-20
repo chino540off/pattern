@@ -2,7 +2,7 @@
 # define PATTERN_H_
 
 # include <list.h>
-# include <mapper.h>
+# include <cluster.h>
 
 struct pattern_ctx_s
 {

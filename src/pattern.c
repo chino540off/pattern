@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include <counter.h>
-#include <mapper.h>
 #include <pattern.h>
 
 static void reduce(void const * elt, void * data)
@@ -36,7 +35,7 @@ int main(int argc, char const * argv[])
 		return 1;
 	}
 
-	mapper_t *		mapper;
+	cluster_t *		cluster;
 	pattern_ctx_t	contexts[n];
 	void *			pcontexts[n];
 
@@ -54,9 +53,9 @@ int main(int argc, char const * argv[])
 		pcontexts[i] = &contexts[i];
 	}
 
-	mapper = mapper_new(n, pcontexts);
-	mapper_run(mapper, pattern_map);
-	mapper_free(mapper);
+	cluster = cluster_new(n, pcontexts);
+	cluster_run(cluster, pattern_map);
+	cluster_free(cluster);
 
 	list_node_t * result = 0;
 

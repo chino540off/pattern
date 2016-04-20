@@ -1,5 +1,5 @@
-#ifndef MAPPER_H_
-# define MAPPER_H_
+#ifndef CLUSTER_H_
+# define CLUSTER_H_
 
 # include <list.h>
 # include <pthread.h>
@@ -15,37 +15,37 @@ typedef struct runner_s runner_t;
 
 typedef runner_t * (*runner_f)(runner_t *);
 
-struct mapper_s
+struct cluster_s
 {
 	runner_t * runners;
 	unsigned int n;
 };
-typedef struct mapper_s mapper_t;
+typedef struct cluster_s cluster_t;
 
 /** 
- * @brief Create a new mapper
+ * @brief Create a new cluster
  * 
  * @param n the number of runners
  * @param contexts an array of contexts given to runners
  * 
  * @return 
  */
-mapper_t * mapper_new(unsigned int n, void * contexts[]);
+cluster_t * cluster_new(unsigned int n, void * contexts[]);
 
 /** 
- * @brief Free a mapper
+ * @brief Free a cluster
  * 
- * @param mapper a mapper
+ * @param cluster a cluster
  */
-void mapper_free(mapper_t * mapper);
+void cluster_free(cluster_t * cluster);
 
 /** 
  * @brief Perform a method on runners
  * 
- * @param mapper a mapper
+ * @param cluster a cluster
  * @param doit a method to be performed
  */
-void mapper_run(mapper_t * mapper, runner_f doit);
+void cluster_run(cluster_t * cluster, runner_f doit);
 
-#endif /** !MAPPER_H_  */
+#endif /** !CLUSTER_H_  */
 

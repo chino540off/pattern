@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include <mapper.h>
+#include <cluster.h>
 
-#define NMAPPER 4
+#define N_CLUSTER 4
 
 struct counter_ctx_s
 {
@@ -32,24 +32,24 @@ int main(int argc,
 	if (argc < 3)
 		return 1;
 
-	unsigned int	n = NMAPPER;
-	mapper_t *		mapper;
+	unsigned int	n = N_CLUSTER;
+	cluster_t *		cluster;
 	counter_ctx_t	contexts[n];
 	void *			pcontexts[n];
 
-	for (unsigned int i = 0; i < NMAPPER; ++i)
+	for (unsigned int i = 0; i < N_CLUSTER; ++i)
 	{
 		contexts[i].value = 0;
 		pcontexts[i] = &contexts[i];
 	}
 
-	mapper = mapper_new(n, pcontexts);
-	mapper_run(mapper, r_init);
+	cluster = cluster_new(n, pcontexts);
+	cluster_run(cluster, r_init);
 
-	for (unsigned int i = 0; i < NMAPPER; ++i)
+	for (unsigned int i = 0; i < N_CLUSTER; ++i)
 	{
 		assert(contexts[i].value == i);
 	}
 
-	mapper_free(mapper);
+	cluster_free(cluster);
 }
