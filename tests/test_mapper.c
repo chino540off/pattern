@@ -1,10 +1,23 @@
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
 
 #include <counter.h>
 #include <mapper.h>
+
+#define NMAPPER 4
+
+int c_cmp(void const * a, void const * b)
+{
+	return strcmp(((counter_t const *)a)->pattern, ((counter_t const *)b)->pattern);
+}
+
+struct counter_ctx_s
+{
+	list_node_t * list;
+};
+typedef struct counter_ctx_s counter_ctx_t;
+
 
 void c_init(void const * a, void * data)
 {
@@ -16,8 +29,9 @@ void c_init(void const * a, void * data)
 void * r_init(void * data)
 {
 	runner_t * r = (runner_t *)data;
+	counter_ctx_t * ctx = (counter_ctx_t *)r->data;
 
-	list_node_foreach(r->list, c_init, &r->index);
+	list_node_foreach(ctx->list, c_init, &r->index);
 
 	pthread_exit(data);
 }
@@ -28,15 +42,27 @@ int main(int argc,
 	if (argc < 3)
 		return 1;
 
-	unsigned int	n = atoi(argv[1]);
+	unsigned int	n = NMAPPER;
 	mapper_t *		mapper;
+	counter_ctx_t	contexts[n];
+	void *			pcontexts[n];
 
-	mapper = mapper_new(n, argv + 2);
+	for (unsigned int i = 0; i < NMAPPER; ++i)
+	{
+		contexts[i].list = 0;
+
+		for (unsigned int j = 1; argv[j]; ++j)
+			contexts[i].list = list_node_insert(contexts[i].list, counter_new(0, argv[j]), c_cmp);
+
+		pcontexts[i] = &contexts[i];
+	}
+
+	mapper = mapper_new(n, pcontexts);
 	mapper_run(mapper, r_init);
 
-	for (unsigned int i = 0; i < mapper->n; ++i)
+	for (unsigned int i = 0; i < NMAPPER; ++i)
 	{
-		list_node_t * p = mapper->runners[i].list;
+		list_node_t * p = contexts[i].list;
 
 		while (p)
 		{
@@ -45,6 +71,8 @@ int main(int argc,
 			assert(c->value == i);
 			p = p->next;
 		}
+
+		list_node_free(contexts[i].list, (list_t_free_f)counter_free);
 	}
 
 	mapper_free(mapper);

@@ -6,9 +6,9 @@
 
 struct runner_s
 {
-	list_node_t * list;
 	pthread_t thread;
 	unsigned int index;
+	void * data;
 };
 typedef struct runner_s runner_t;
 
@@ -29,7 +29,7 @@ typedef struct mapper_s mapper_t;
  * 
  * @return 
  */
-mapper_t * mapper_new(unsigned int n, char const * patterns[]);
+mapper_t * mapper_new(unsigned int n, void * contexts[]);
 
 /** 
  * @brief 
