@@ -63,7 +63,7 @@ runner_t * pattern_map(runner_t * r)
 		//if (r->index == 0)
 		//	printf("%c", state.c);
 
-		list_node_foreach(ctx->list, check_current_char, &state);
+		slist_node_foreach(ctx->list, check_current_char, &state);
 	}
 
 	//if (r->index == 0)

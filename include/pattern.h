@@ -1,12 +1,12 @@
 #ifndef PATTERN_H_
 # define PATTERN_H_
 
-# include <list.h>
+# include <slist.h>
 # include <cluster.h>
 
 struct pattern_ctx_s
 {
-	list_node_t * list;
+	slist_node_t * list;
 	char const * filename;
 };
 typedef struct pattern_ctx_s pattern_ctx_t;

@@ -1,7 +1,6 @@
 #ifndef CLUSTER_H_
 # define CLUSTER_H_
 
-# include <list.h>
 # include <pthread.h>
 
 struct runner_s
