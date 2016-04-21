@@ -29,9 +29,9 @@ int main(int argc, char const * argv[])
 	}
 
 	unsigned int	n = atoi(argv[2]);
-	if ((int)n <= 0)
+	if ((int)n <= 0 || n >= 64)
 	{
-		fprintf(stderr, "NBTHREAD must be a positive and superior than zero\n");
+		fprintf(stderr, "NBTHREAD must be a positive and superior than zero or less than 64\n");
 		return 1;
 	}
 
