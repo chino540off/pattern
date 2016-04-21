@@ -5,7 +5,7 @@
 struct map_state_s
 {
 	bool can_start;
-	char c;
+	int c;
 	int current;
 };
 typedef struct map_state_s map_state_t;
@@ -71,6 +71,8 @@ mapper_t * pattern_map(mapper_t * r)
 	while (!pstream_eop(ps))
 	{
 		state.c = pstream_getc(ps);
+		if (state.c == EOF)
+			break;
 		slist_node_foreach(ctx->list, check_current_char, &state);
 	}
 
@@ -82,6 +84,8 @@ mapper_t * pattern_map(mapper_t * r)
 	while (state.current > 0)
 	{
 		state.c = pstream_getc(ps);
+		if (state.c == EOF)
+			break;
 		slist_node_foreach(ctx->list, check_current_char, &state);
 	}
 

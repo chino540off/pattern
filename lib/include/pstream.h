@@ -47,7 +47,7 @@ static inline bool pstream_eop(pstream_t const * ps)
  * 
  * @return a char
  */
-static inline char pstream_getc(pstream_t * ps)
+static inline int pstream_getc(pstream_t * ps)
 {
 	++ps->offset;
 	return fgetc(ps->fd);
