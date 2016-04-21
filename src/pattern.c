@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -15,13 +16,22 @@ static void print(void const * elt, void * data)
 int main(int argc, char const * argv[])
 {
 	if (argc < 4)
+	{
+		fprintf(stderr, "Usage: %s FILE NBTHREAD [PATTERNS]...\n", argv[0]);
 		return 1;
+	}
 
 	char const *	filename = argv[1];
-	unsigned int	n = atoi(argv[2]);
+	if (access(filename, R_OK) != 0)
+	{
+		perror(filename);
+		return 1;
+	}
 
+	unsigned int	n = atoi(argv[2]);
 	if ((int)n <= 0)
 	{
+		fprintf(stderr, "NBTHREAD must be a positive and superior than zero\n");
 		return 1;
 	}
 
