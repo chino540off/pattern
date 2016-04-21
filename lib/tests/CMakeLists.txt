@@ -1,6 +1,5 @@
 include(CTest)
 
-include_directories("${PROJECT_SOURCE_DIR}/include")
 include_directories("${PROJECT_SOURCE_DIR}/lib/include")
 
 add_executable(test_slist test_slist.c)

@@ -4,3 +4,4 @@ add_library(slist   src/slist.c)
 add_library(cluster src/cluster.c)
 add_library(pstream src/pstream.c)
 
+add_subdirectory(tests)

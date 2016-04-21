@@ -18,5 +18,5 @@ find_package(Threads REQUIRED)
 
 add_subdirectory(lib)
 add_subdirectory(src)
-add_subdirectory(tests)
+#add_subdirectory(tests)
 
