@@ -4,27 +4,28 @@
 
 #include <slist.h>
 
-int cmp(void const * a, void const * b)
+static int cmp(void const * a, void const * b)
 {
 	return strcmp((char const *)a, (char const *)b);
 }
 
-void count(void const * a, void * data)
+static void count(void const * a, void * data)
 {
 	unsigned int * cpt =(unsigned int *)data;
-	a = a;
+
+	(void)(a);
 
 	++(*cpt);
 }
 
-void * no_dup(void const * elt)
+static void * no_dup(void const * elt)
 {
 	return (void *)elt;
 }
 
-void no_free(void * elt)
+static void no_free(void * elt)
 {
-	elt = elt;
+	(void)(elt);
 }
 
 int main()

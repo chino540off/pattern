@@ -20,7 +20,7 @@ pstream_t * pstream_open(char const * fn, char const * m, unsigned int const i, 
 
 	ps->slice = f_size / n;
 	ps->size = (i == n - 1) ? ps->slice + (f_size % n) : ps->slice;
-	ps->offset = 0;
+	ps->pos = 0;
 	ps->i = i;
 	ps->n = n;
 

@@ -13,11 +13,6 @@ struct counter_ctx_s
 };
 typedef struct counter_ctx_s counter_ctx_t;
 
-static void no_free(void * p)
-{
-	p = p;
-}
-
 static mapper_t * map(mapper_t * r)
 {
 	counter_ctx_t * ctx = (counter_ctx_t *)r->data;
@@ -51,6 +46,9 @@ static unsigned int sum(unsigned int v)
 int main(int argc,
 		 char const ** argv)
 {
+	if (argc < 2)
+		return 1;
+
 	unsigned int	n = atoi(argv[1]);
 	cluster_t *		cluster;
 	counter_ctx_t	contexts[n];

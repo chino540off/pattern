@@ -7,6 +7,7 @@
 
 static void print(void const * elt, void * data)
 {
+	(void)(data);
 	counter_t * counter = (counter_t *)elt;
 
 	counter_print(counter, stdout);

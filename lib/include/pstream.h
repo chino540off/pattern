@@ -8,7 +8,7 @@
 struct pstream_s
 {
 	FILE * fd;
-	int offset;
+	unsigned int pos;
 	unsigned int size;
 	unsigned int slice;
 	unsigned int i;
@@ -37,7 +37,7 @@ pstream_t * pstream_open(char const * fn, char const * m, unsigned int const i, 
  */
 static inline bool pstream_eop(pstream_t const * ps)
 {
-	return ps->offset >= ps->size;
+	return ps->pos >= ps->size;
 }
 
 /** 
@@ -49,7 +49,7 @@ static inline bool pstream_eop(pstream_t const * ps)
  */
 static inline int pstream_getc(pstream_t * ps)
 {
-	++ps->offset;
+	++ps->pos;
 	return fgetc(ps->fd);
 }
 
