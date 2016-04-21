@@ -20,5 +20,14 @@ typedef struct pattern_ctx_s pattern_ctx_t;
  */
 mapper_t * pattern_map(mapper_t * r);
 
+/** 
+ * @brief 
+ * 
+ * @param r
+ * 
+ * @return 
+ */
+reducer_t * pattern_reduce(reducer_t * r);
+
 #endif /** !PATTERN_H_  */
 
