@@ -15,7 +15,9 @@ typedef struct map_state_s map_state_t;
 //	counter_t * counter = (counter_t *)elt;
 //	map_state_t * state = (map_state_t *)data;
 //
-//	printf(" -- %s seen %d, offset %d\n", counter->pattern, counter->value, counter->offset);
+//	printf(" -- %s seen %d\n", counter->pattern, counter->value);
+//	for (unsigned int pos = counter->size; pos > 0; --pos)
+//		printf("pos %d used: %d\n", pos - 1, counter->used[pos - 1]);
 //}
 
 static void check_current_char(void const * elt, void * data)
@@ -23,32 +25,35 @@ static void check_current_char(void const * elt, void * data)
 	counter_t * counter = (counter_t *)elt;
 	map_state_t * state = (map_state_t *)data;
 
-	if (!state->can_start && counter->offset == 0)
-		return;
-
-	/// Current read char
-	if (counter->pattern[counter->offset] == state->c)
+	if (counter->pattern[0] == state->c && state->can_start)
 	{
-		if (counter->offset == 0)
-			++state->current;
-
-		++counter->offset;
-
-		if (counter->offset >= counter->size)
-		{
-			++counter->value;
-			counter->offset = 0;
-			--state->current;
-		}
+		++state->current;
+		counter->used[0] = 1;
 	}
-	else
+
+	for (unsigned int pos = counter->size; pos > 0; --pos)
 	{
-		if (counter->offset != 0)
+		if (counter->used[pos - 1])
 		{
-			counter->offset = 0;
-			--state->current;
+			if (counter->pattern[pos - 1] == state->c)
+			{
+				//printf("pos %d used: %d\n", pos - 1, counter->used[pos - 1]);
+				counter->used[pos] = 1;
+
+				if (pos == counter->size)
+				{
+					--state->current;
+					++counter->value;
+				}
+			}
+			else
+			{
+				--state->current;
+			}
 		}
+		counter->used[pos - 1] = 0;
 	}
+
 }
 
 mapper_t * pattern_map(mapper_t * r)

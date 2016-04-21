@@ -5,7 +5,7 @@
 
 struct counter_s
 {
-	unsigned int offset;
+	char * used;
 	unsigned int size;
 
 	unsigned int value;
