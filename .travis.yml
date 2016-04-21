@@ -1,0 +1,9 @@
+dist: trusty
+language: c
+
+before_script:
+    - ./build.sh
+
+script:
+    - cd build
+    - make test
