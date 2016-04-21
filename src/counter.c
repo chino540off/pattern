@@ -19,6 +19,7 @@ counter_t * counter_new(unsigned int value, char const * pattern)
 		free(c);
 		return 0;
 	}
+	memset(c->used, 0x0, c->size + 1);
 
 	return c;
 }
@@ -35,11 +36,16 @@ int counter_cmp(counter_t const * a, counter_t const * b)
 
 counter_t * counter_dup(counter_t const * c)
 {
-	return counter_new(c->value, c->pattern);
+	counter_t * ret = counter_new(c->value, c->pattern);
+
+	if (ret != 0)
+		memcpy(ret->used, c->used, c->size + 1);
+	return ret;
 }
 
 void counter_free(counter_t * c)
 {
+	free(c->used);
 	free(c);
 }
 
