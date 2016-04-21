@@ -1,12 +1,8 @@
 # pattern
 ## Build
 ```
-mkdir build
-cd build
-cmake ..
-make
-make test
-./src/pattern ...
+./build.sh
+./pattern ...
 ```
 ## Usage
 `pattern file nbthreads patterns...`
@@ -27,7 +23,7 @@ blabla
 blabla
 blabla
 blabla
-./src/pattern file.txt 4 b l a bl la bla blabla
+./pattern file.txt 4 b l a bl la bla blabla
 pattern a == 20
 pattern b == 20
 pattern bl == 20
