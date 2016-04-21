@@ -32,3 +32,23 @@ pattern blabla == 10
 pattern l == 20
 pattern la == 20
 ```
+
+## Known issues
+#### Test_0002: Similarity pattern on a part limit
+Example:
+```
+cat file.txt
+aaaaaaa
+./pattern file.txt 1 a aa aaa aaaa aaaaa
+pattern a == 7
+pattern aa == 3
+pattern aaa == 2
+pattern aaaa == 1
+pattern aaaaa == 1
+./pattern file.txt 2 a aa aaa aaaa aaaaa
+pattern a == 7
+pattern aa == 3
+pattern aaa == 3
+pattern aaaa == 1
+pattern aaaaa == 1
+```
