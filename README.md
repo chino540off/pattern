@@ -34,7 +34,7 @@ pattern la == 20
 ```
 
 ## Known issues
-#### Test_0002: Similarity pattern on a part limit
+#### Test_0002: Similarity pattern on a part border
 Example:
 ```
 cat file.txt
