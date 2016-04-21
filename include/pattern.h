@@ -18,7 +18,7 @@ typedef struct pattern_ctx_s pattern_ctx_t;
  * 
  * @return 
  */
-runner_t * pattern_map(runner_t * r);
+mapper_t * pattern_map(mapper_t * r);
 
 #endif /** !PATTERN_H_  */
 

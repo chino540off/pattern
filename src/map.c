@@ -40,7 +40,7 @@ static void check_current_char(void const * elt, void * data)
 	}
 }
 
-runner_t * pattern_map(runner_t * r)
+mapper_t * pattern_map(mapper_t * r)
 {
 	pattern_ctx_t * ctx = (pattern_ctx_t *)r->data;
 	pstream_t * ps;
