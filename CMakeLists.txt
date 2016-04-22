@@ -16,7 +16,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 enable_c99()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra")
-set(CMAKE_C_FLAGS_DEBUG "-O0 -ggdb")
+set(CMAKE_C_FLAGS_DEBUG "-O0 -ggdb -fprofile-arcs -ftest-coverage")
 set(CMAKE_C_FLAGS_RELEASE "-O2")
 
 enable_testing()

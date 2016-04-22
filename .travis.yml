@@ -1,9 +1,16 @@
 dist: trusty
 language: c
+compiler:
+    - gcc
 
 before_script:
+    - pip install --user cpp-coveralls
     - ./build.sh
 
 script:
     - cd build
     - make test
+
+after_success:
+    - cd build
+    - coveralls --gcov-options '\-lp'
