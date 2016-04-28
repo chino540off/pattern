@@ -6,7 +6,7 @@
 
 struct pattern_ctx_s
 {
-	slist_node_t * list;
+	slist_t * list;
 	char const * filename;
 };
 typedef struct pattern_ctx_s pattern_ctx_t;

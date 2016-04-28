@@ -78,7 +78,7 @@ mapper_t * pattern_map(mapper_t * r)
 		state.c = pstream_getc(ps);
 		if (state.c == EOF)
 			break;
-		slist_node_foreach(ctx->list, check_current_char, &state);
+		slist_foreach(ctx->list, check_current_char, &state);
 	}
 
 	//printf("Thread[%d] status after end of part\n", r->index);
@@ -91,7 +91,7 @@ mapper_t * pattern_map(mapper_t * r)
 		state.c = pstream_getc(ps);
 		if (state.c == EOF)
 			break;
-		slist_node_foreach(ctx->list, check_current_char, &state);
+		slist_foreach(ctx->list, check_current_char, &state);
 	}
 
 	if (pstream_close(ps))

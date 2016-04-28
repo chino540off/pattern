@@ -16,10 +16,10 @@ reducer_t * pattern_reduce(reducer_t * r)
 	pattern_ctx_t * ctx1 = (pattern_ctx_t *)r->ctx1;
 	pattern_ctx_t * ctx2 = (pattern_ctx_t *)r->ctx2;
 
-	slist_node_t * p = ctx2->list;
-	slist_node_foreach(ctx1->list, add, &p);
+	slist_node_t * p = ctx2->list->head;
+	slist_foreach(ctx1->list, add, &p);
 
-	slist_node_free(ctx2->list, (slist_node_t_free_f)counter_free);
+	slist_free(ctx2->list);
 	ctx2->list = 0;
 
 	pthread_exit(r);

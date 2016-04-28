@@ -42,13 +42,13 @@ int main(int argc, char const * argv[])
 
 	for (unsigned int i = 0; i < n; ++i)
 	{
-		contexts[i].list = 0;
+		contexts[i].list = slist_new((slist_node_t_free_f)counter_free, (slist_node_t_dup_f)counter_dup, (slist_node_t_cmp_f)counter_cmp);
 		contexts[i].filename = filename;
 
 		for (unsigned int j = 3; argv[j]; ++j)
 		{
 			counter_t * c = counter_new(0, argv[j]);
-			contexts[i].list = slist_node_insert(contexts[i].list, c, (slist_node_t_cmp_f)counter_cmp);
+			contexts[i].list = slist_insert(contexts[i].list, c);
 		}
 
 		pcontexts[i] = &contexts[i];
@@ -60,10 +60,10 @@ int main(int argc, char const * argv[])
 
 	pattern_ctx_t * result = cluster_reduce(cluster, pattern_reduce);
 
-	slist_node_foreach(result->list, print, 0);
+	slist_foreach(result->list, print, 0);
 
 	cluster_free(cluster);
-	slist_node_free(result->list, (slist_node_t_free_f)counter_free);
+	slist_free(result->list);
 
 	return 0;
 }

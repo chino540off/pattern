@@ -13,53 +13,61 @@ typedef void (*slist_node_t_foreach_f)(void const *, void *);
 typedef void * (*slist_node_t_dup_f)(void const *);
 typedef void (*slist_node_t_free_f)(void *);
 
+struct slist_s
+{
+	struct slist_node_s * head;
+
+	slist_node_t_free_f free;
+	slist_node_t_dup_f dup;
+	slist_node_t_cmp_f cmp;
+};
+typedef struct slist_s slist_t;
+
 /** 
- * @brief Create a new list node
+ * @brief Create a new list
  * 
- * @param elt the element in the node
- * @param next the next in the linkage
+ * @param free the element free policy
+ * @param dup the element duplication policy
+ * @param cmp the element comparaison policy
  * 
- * @return the new element or null if there is no enough memory
+ * @return the new list or null if there is no enough memory
  */
-slist_node_t * slist_node_new(void * elt, slist_node_t * next);
+slist_t * slist_new(slist_node_t_free_f free, slist_node_t_dup_f dup, slist_node_t_cmp_f cmp);
 
 /** 
  * @brief Linked List insertion
  * 
- * @param h head list
+ * @param l the list
  * @param elt element to be inserted
- * @param cmp comparaison method
  * 
  * @return the new head of the list
  */
-slist_node_t * slist_node_insert(slist_node_t * h, void * elt, slist_node_t_cmp_f cmp);
+slist_t * slist_insert(slist_t * l, void * elt);
 
 /** 
  * @brief Iter on each elements
  * 
- * @param h the head of the list
+ * @param l the list
  * @param f the method to applied on each element
  * @param data a data given by the client
  */
-void slist_node_foreach(slist_node_t const * h, slist_node_t_foreach_f f, void * data);
+void slist_foreach(slist_t const * l, slist_node_t_foreach_f f, void * data);
 
 /** 
  * @brief Duplicate each elements of the list
  * 
- * @param h the head of the list
- * @param elt_dup the element duplication policy
+ * @param l the list
  * 
  * @return a new list
  */
-slist_node_t * slist_node_dup(slist_node_t const * h, slist_node_t_dup_f elt_dup);
+slist_t * slist_dup(slist_t const * l);
 
 /** 
  * @brief Free each elements of the list
  * 
- * @param h the head of the list
- * @param elt_free the element free policy
+ * @param l the list
  */
-void slist_node_free(slist_node_t * h, slist_node_t_free_f elt_free);
+void slist_free(slist_t * l);
 
 #endif /** !SLIST_H_  */
 

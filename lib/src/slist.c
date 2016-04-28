@@ -2,7 +2,7 @@
 
 #include <slist.h>
 
-slist_node_t * slist_node_new(void * elt, slist_node_t * next)
+static slist_node_t * slist_node_new(void * elt, slist_node_t * next)
 {
 	slist_node_t * p = 0;
 
@@ -17,18 +17,35 @@ slist_node_t * slist_node_new(void * elt, slist_node_t * next)
 	return p;
 }
 
-slist_node_t * slist_node_insert(slist_node_t * h, void * elt, slist_node_t_cmp_f cmp)
+slist_t * slist_new(slist_node_t_free_f free, slist_node_t_dup_f dup, slist_node_t_cmp_f cmp)
 {
-	if (h == 0)
+	slist_t * l = 0;
+
+	if ((l = malloc(sizeof (slist_t))) == 0)
 	{
-		h = slist_node_new(elt, 0);
+		return 0;
+	}
+
+	l->head = 0;
+	l->free = free;
+	l->dup = dup;
+	l->cmp = cmp;
+
+	return l;
+}
+
+slist_t * slist_insert(slist_t * l, void * elt)
+{
+	if (l->head == 0)
+	{
+		l->head = slist_node_new(elt, 0);
 	}
 	else
 	{
-		slist_node_t * p = h;
+		slist_node_t * p = l->head;
 		slist_node_t * prev = 0;
 
-		while (p && cmp(elt, p->elt) >= 0)
+		while (p && l->cmp(elt, p->elt) >= 0)
 		{
 			prev = p;
 			p = p->next;
@@ -36,7 +53,7 @@ slist_node_t * slist_node_insert(slist_node_t * h, void * elt, slist_node_t_cmp_
 
 		if (prev == 0) /// Head insertion
 		{
-			h = slist_node_new(elt, p);
+			l->head = slist_node_new(elt, p);
 		}
 		else /// Insertion
 		{
@@ -44,12 +61,12 @@ slist_node_t * slist_node_insert(slist_node_t * h, void * elt, slist_node_t_cmp_
 		}
 	}
 
-	return h;
+	return l;
 }
 
-void slist_node_foreach(slist_node_t const * h, slist_node_t_foreach_f f, void * data)
+void slist_foreach(slist_t const * l, slist_node_t_foreach_f f, void * data)
 {
-	slist_node_t const * p = h;
+	slist_node_t const * p = l->head;
 
 	while (p)
 	{
@@ -58,36 +75,39 @@ void slist_node_foreach(slist_node_t const * h, slist_node_t_foreach_f f, void *
 	}
 }
 
-slist_node_t * slist_node_dup(slist_node_t const * h, slist_node_t_dup_f elt_dup)
+slist_t * slist_dup(slist_t const * l)
 {
-	slist_node_t * new_h = 0;
+	slist_t * new_l = slist_new(l->free, l->dup, l->cmp);
 
-	if (h)
+	if (new_l == 0)
+		return 0;
+
+	if (l->head)
 	{
-		slist_node_t ** new_p = &new_h;
-		slist_node_t const * p = h;
+		slist_node_t ** new_p = &new_l->head;
+		slist_node_t const * p = l->head;
 
 		while (p)
 		{
-			*new_p = slist_node_new(elt_dup(p->elt), 0);
+			*new_p = slist_node_new(l->dup(p->elt), 0);
 			p = p->next;
 			new_p = &((*new_p)->next);
 		}
 	}
 
-	return new_h;
+	return new_l;
 }
 
-void slist_node_free(slist_node_t * h, slist_node_t_free_f elt_free)
+void slist_free(slist_t * l)
 {
-	while (h)
+	while (l->head)
 	{
-		slist_node_t * t = h;
-		h = h->next;
+		slist_node_t * t = l->head;
+		l->head = l->head->next;
 
-		elt_free(t->elt);
+		l->free(t->elt);
 		free(t);
-
 	}
+	free(l);
 }
 

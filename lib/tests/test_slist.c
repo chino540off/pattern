@@ -38,24 +38,24 @@ int main()
 		"aa",
 	};
 
-	slist_node_t * l = 0;
+	slist_t * l = slist_new(no_free, no_dup, cmp);
 
 	for (unsigned int i = 0; i < (sizeof (tab) / sizeof (char const *)); ++i)
-		l = slist_node_insert(l, (void *)tab[i], cmp);
+		l = slist_insert(l, (void *)tab[i]);
 
 	assert(l);
 
 	unsigned int cpt = 0;
-	slist_node_foreach(l, count, &cpt);
+	slist_foreach(l, count, &cpt);
 	assert(cpt == 4);
 
 	cpt = 0;
-	slist_node_t * d1 = slist_node_dup(l, no_dup);
+	slist_t * d1 = slist_dup(l);
 	assert(d1);
 
-	slist_node_foreach(d1, count, &cpt);
+	slist_foreach(d1, count, &cpt);
 	assert(cpt == 4);
 
-	slist_node_free(d1, no_free);
-	slist_node_free(l,  no_free);
+	slist_free(d1);
+	slist_free(l);
 }
