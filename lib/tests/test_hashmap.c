@@ -15,6 +15,14 @@ struct data_struct_s
 };
 typedef struct data_struct_s data_struct_t;
 
+void hashmap_node_print(void const * value, void * data)
+{
+	FILE * s = (FILE *)data;
+	data_struct_t * v = (data_struct_t *)value;
+
+	fprintf(s, "%s %d\n", v->key_string, v->number);
+}
+
 int main(void)
 {
 	int error;
@@ -33,8 +41,10 @@ int main(void)
 		value->number = index;
 
 		error = hashmap_put(mymap, value->key_string, value);
-		assert(error==MAP_OK);
+		assert(error == MAP_OK);
 	}
+
+	hashmap_foreach(mymap, hashmap_node_print, stdout);
 
 	/* Now, check all of the expected values are there */
 	for (int index = 0; index < KEY_COUNT; ++index)
@@ -44,7 +54,7 @@ int main(void)
 		error = hashmap_get(mymap, key_string, (void**)(&value));
 
 		/* Make sure the value was both found and the correct number */
-		assert(error==MAP_OK);
+		assert(error == MAP_OK);
 		assert(value->number==index);
 	}
 
@@ -54,7 +64,7 @@ int main(void)
 	error = hashmap_get(mymap, key_string, (void**)(&value));
 
 	/* Make sure the value was not found */
-	assert(error==MAP_MISSING);
+	assert(error == MAP_MISSING);
 
 	/* Free all of the values we allocated and remove them from the map */
 	for (int index = 0; index < KEY_COUNT; ++index)
@@ -62,10 +72,10 @@ int main(void)
 		snprintf(key_string, KEY_MAX_LENGTH, "%s%d", KEY_PREFIX, index);
 
 		error = hashmap_get(mymap, key_string, (void**)(&value));
-		assert(error==MAP_OK);
+		assert(error == MAP_OK);
 
 		error = hashmap_remove(mymap, key_string);
-		assert(error==MAP_OK);
+		assert(error == MAP_OK);
 
 		free(value);
 	}

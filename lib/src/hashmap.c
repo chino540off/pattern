@@ -170,14 +170,14 @@ hashmap_t * hashmap_new()
 	return m;
 }
 
-int hashmap_foreach(hashmap_t const * m, hashmap_node_t_foreach_f f, void * data)
+hashmap_cerr_t hashmap_foreach(hashmap_t const * m, hashmap_node_t_foreach_f f, void * data)
 {
 	/* On empty hashmap, return immediately */
 	if (hashmap_length(m) <= 0)
 		return MAP_MISSING;	
 
 	/* Linear probing */
-	for (int i = 0; i < m->table_size; ++i)
+	for (unsigned int i = 0; i < m->table_size; ++i)
 	{
 		if (m->entries[i].in_use != 0)
 		{
@@ -189,7 +189,7 @@ int hashmap_foreach(hashmap_t const * m, hashmap_node_t_foreach_f f, void * data
     return MAP_OK;
 }
 
-int hashmap_put(hashmap_t * m, char * key, void * value)
+hashmap_cerr_t hashmap_put(hashmap_t * m, char * key, void * value)
 {
 	/* Find a place to put our value */
 	int index = hashmap_hash(m, key);
@@ -214,7 +214,7 @@ int hashmap_put(hashmap_t * m, char * key, void * value)
 /*
  * Get your pointer out of the hashmap with a key
  */
-int hashmap_get(hashmap_t const * m, char const * key, void ** arg)
+hashmap_cerr_t hashmap_get(hashmap_t const * m, char const * key, void ** arg)
 {
 	/* Find data location */
 	int curr = hashmap_hash_int(m, key);
@@ -241,7 +241,7 @@ int hashmap_get(hashmap_t const * m, char const * key, void ** arg)
 	return MAP_MISSING;
 }
 
-int hashmap_remove(hashmap_t * m, char const * key)
+hashmap_cerr_t hashmap_remove(hashmap_t * m, char const * key)
 {
 	/* Find key */
 	int curr = hashmap_hash_int(m, key);
@@ -278,7 +278,7 @@ void hashmap_free(hashmap_t * m)
 	free(m);
 }
 
-int hashmap_length(hashmap_t const * m)
+unsigned int hashmap_length(hashmap_t const * m)
 {
 	if (m != 0)
 		return m->size;

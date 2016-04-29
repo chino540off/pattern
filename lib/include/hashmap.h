@@ -1,10 +1,14 @@
 #ifndef HASHMAP_H_
 # define HASHMAP_H_
 
-# define MAP_MISSING -3	/* No such element */
-# define MAP_FULL -2	/* Hashmap is full */
-# define MAP_OMEM -1	/* Out of Memory */
-# define MAP_OK 0		/* OK */
+enum hashmap_cerr_e
+{
+	MAP_MISSING = -3,
+	MAP_FULL = -2,
+	MAP_OMEM = -1,
+	MAP_OK = 0,
+};
+typedef enum hashmap_cerr_e hashmap_cerr_t;
 
 /* We need to keep keys and values */
 struct hashmap_node_s
@@ -17,8 +21,8 @@ typedef struct hashmap_node_s hashmap_node_t;
 
 struct hashmap_s
 {
-	int table_size;
-	int size;
+	unsigned int table_size;
+	unsigned int size;
 	hashmap_node_t * entries;
 };
 typedef struct hashmap_s hashmap_t;
@@ -39,22 +43,22 @@ hashmap_t * hashmap_new();
  * than MAP_OK the traversal is terminated. f must
  * not reenter any hashmap functions, or deadlock may arise.
  */
-int hashmap_foreach(hashmap_t const * m, hashmap_node_t_foreach_f f, void * item);
+hashmap_cerr_t hashmap_foreach(hashmap_t const * m, hashmap_node_t_foreach_f f, void * item);
 
 /*
  * Add an element to the hashmap. Return MAP_OK or MAP_OMEM.
  */
-int hashmap_put(hashmap_t * m, char * key, void * value);
+hashmap_cerr_t hashmap_put(hashmap_t * m, char * key, void * value);
 
 /*
  * Get an element from the hashmap. Return MAP_OK or MAP_MISSING.
  */
-int hashmap_get(hashmap_t const * m, char const * key, void ** arg);
+hashmap_cerr_t hashmap_get(hashmap_t const * m, char const * key, void ** arg);
 
 /*
  * Remove an element from the hashmap. Return MAP_OK or MAP_MISSING.
  */
-int hashmap_remove(hashmap_t * m, char const * key);
+hashmap_cerr_t hashmap_remove(hashmap_t * m, char const * key);
 
 /*
  * Free the hashmap
@@ -64,7 +68,7 @@ void hashmap_free(hashmap_t * m);
 /*
  * Get the current size of a hashmap
  */
-int hashmap_length(hashmap_t const * m);
+unsigned int hashmap_length(hashmap_t const * m);
 
 #endif /** !HASHMAP_H_  */
 
