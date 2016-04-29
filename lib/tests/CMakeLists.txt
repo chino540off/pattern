@@ -5,6 +5,9 @@ include_directories("${PROJECT_SOURCE_DIR}/lib/include")
 add_executable(test_slist test_slist.c)
 target_link_libraries(test_slist slist)
 
+add_executable(test_hashmap test_hashmap.c)
+target_link_libraries(test_hashmap hashmap)
+
 add_executable(test_cluster test_cluster.c)
 target_link_libraries(test_cluster cluster slist ${CMAKE_THREAD_LIBS_INIT})
 
