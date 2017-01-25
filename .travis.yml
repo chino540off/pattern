@@ -18,4 +18,6 @@ script:
   - "./build.sh test"
 
 after_success:
-  - coveralls
+  - '[[ "$CC" != clang ]] || export GCOV=llvm-cov gcov'
+  - '[[ "$CC" != gcc   ]] || export GCOV=gcov'
+  - coveralls --gcov $GCOV
