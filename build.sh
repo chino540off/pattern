@@ -15,14 +15,7 @@ function build()
 function test()
 {
   cd build
-
-  lcov --zerocounters --directory .
-  lcov --capture --initial --directory . --output-file app
-
   ctest
-
-  lcov --no-checksum --directory . --capture --output-file app.info
-  genhtml app.info -o genhtml
 }
 
 $1
