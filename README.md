@@ -1,4 +1,4 @@
-# pattern
+# pattern [![Build Status](https://travis-ci.org/chino540off/pattern.svg?branch=master)](https://travis-ci.org/chino540off/pattern) [![Coverage Status](https://coveralls.io/repos/github/chino540off/pattern/badge.svg?branch=master)](https://coveralls.io/github/chino540off/pattern?branch=master)
 ## Build
 ```
 ./build.sh
