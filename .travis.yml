@@ -1,16 +1,18 @@
 dist: trusty
 language: c
 compiler:
-    - gcc
+  - gcc
+
+install:
+  - sudo apt-get install lcov rubygems-integration
+  - gem install lcoveralls
 
 before_script:
-    - pip install --user cpp-coveralls
-    - ./build.sh
+  - ./build.sh build
 
 script:
-    - cd build
-    - make test
+  - ./build.sh test
 
 after_success:
-    - cd build
-    - coveralls --gcov-options '\-lp'
+  - cd build
+  - lcoveralls

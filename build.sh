@@ -1,18 +1,28 @@
-#! /bin/sh
+#! /bin/bash
 
-if [ -d build ]; then
-	rm -rf build
-fi
+function build()
+{
+  if [ -d build ]; then
+          rm -rf build
+  fi
 
-mkdir build
-cd build
-cmake .. -DCMAKE_BUILD_TYPE=Debug
-make
+  mkdir build
+  cd build
+  cmake .. -DCMAKE_BUILD_TYPE=Debug
+  make
+}
 
-lcov --zerocounters --directory .
-lcov --capture --initial --directory . --output-file app
+function test()
+{
+  cd build
 
-ctest
+  lcov --zerocounters --directory .
+  lcov --capture --initial --directory . --output-file app
 
-lcov --no-checksum --directory . --capture --output-file app.info
-genhtml app.info -o genhtml
+  ctest
+
+  lcov --no-checksum --directory . --capture --output-file app.info
+  genhtml app.info -o genhtml
+}
+
+$1
